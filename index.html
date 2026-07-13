@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparing and Ordering Decimals | Year 5 Maths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#22283b; --ink-soft:#565d78;
+    --paper:#fbf9f4; --card:#ffffff; --line:#e8e2d5;
+    --teal:#0f8a7d; --teal-deep:#0a5c53; --teal-tint:#e6f4f1;
+    --coral:#ef6461; --coral-deep:#c0392b;
+    --green:#2f9e6b; --green-tint:#eaf6ef;
+    --orange:#df8a2c; --orange-tint:#fbf1e0;
+    --red:#d64550; --red-tint:#fbebed;
+    --shadow:0 1px 2px rgba(34,40,59,.06), 0 8px 24px rgba(34,40,59,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Nunito",system-ui,sans-serif;font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{font-family:"Fraunces",Georgia,serif;color:var(--ink);line-height:1.15;margin:0}
+  h2{font-size:1.72rem;font-weight:600;margin-bottom:.35em}
+  h3{font-size:1.18rem;font-weight:600}
+  p{margin:.5em 0}
+  a{color:var(--teal-deep);font-weight:700}
+  .eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-deep)}
+  .ruler{display:flex;align-items:center;gap:0;height:26px}
+  .ruler .tick{flex:1;height:2px;background:var(--line);position:relative}
+  .ruler .tick::after{content:"";position:absolute;right:0;top:-6px;width:2px;height:14px;background:var(--line)}
+  .ruler .dot{width:11px;height:11px;border-radius:50%;background:var(--coral);flex:0 0 auto;margin:0 3px}
+
+  header.hero{padding:56px 0 34px;border-bottom:1px solid var(--line);background:radial-gradient(120% 80% at 78% -10%, var(--teal-tint) 0%, rgba(230,244,241,0) 55%)}
+  .hero .eyebrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .hero .code{background:#fff;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--ink-soft);letter-spacing:.04em}
+  .hero h1{font-size:clamp(2.3rem,6.5vw,3.5rem);font-weight:900;margin:.18em 0 .1em;letter-spacing:-.01em}
+  .hero .lede{font-size:1.12rem;color:var(--ink-soft);max-width:34em}
+  .hero-ruler{margin:26px 0 6px}
+  .hero-ruler .lab{display:flex;justify-content:space-between;font-size:.72rem;color:var(--ink-soft);font-weight:700;margin-top:6px}
+
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow)}
+  .muted{color:var(--ink-soft)} .small{font-size:.9rem}
+
+  .li{display:grid;gap:16px}
+  @media(min-width:680px){.li{grid-template-columns:1fr 1fr}}
+  .badge{font-family:"Nunito";font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--teal-tint);color:var(--teal-deep);padding:3px 9px;border-radius:999px}
+  .sc-item{display:flex;gap:12px;align-items:flex-start;padding:9px 0;cursor:pointer;user-select:none}
+  .sc-item + .sc-item{border-top:1px dashed var(--line)}
+  .sc-box{flex:0 0 auto;width:24px;height:24px;border:2px solid var(--teal);border-radius:7px;display:grid;place-items:center;margin-top:1px;transition:.15s;color:#fff;font-weight:900;font-size:.9rem}
+  .sc-item.done .sc-box{background:var(--teal);border-color:var(--teal)}
+  .sc-item.done span{color:var(--ink-soft);text-decoration:line-through}
+
+  .dec{font-weight:900;color:var(--teal-deep)}
+  .sym{font-weight:900;color:var(--coral-deep)}
+
+  /* compare tool */
+  .tool{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow)}
+  .tool .inputs{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .tool input{font-family:"Nunito";font-weight:900;font-size:1.4rem;width:150px;text-align:center;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+  .tool input:focus{outline:none;border-color:var(--teal)}
+  .tool .qmark{font-size:1.6rem;font-weight:900;color:var(--ink-soft)}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0 2px}
+  .chip{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 13px;font-family:"Nunito";font-weight:800;font-size:.92rem;cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--teal)}
+  .align{display:flex;flex-direction:column;gap:6px;align-items:center;margin-top:16px;min-height:40px}
+  .drow{display:flex;align-items:flex-end;gap:0}
+  .dcell{width:38px;height:46px;display:grid;place-items:center;font-family:"Fraunces",serif;font-weight:900;font-size:1.5rem;border-radius:8px;border:2px solid transparent}
+  .dcell.point{width:16px;font-size:1.5rem;color:var(--coral)}
+  .dcell.decide{background:var(--teal);color:#fff;border-color:var(--teal-deep)}
+  .dlabels{display:flex;gap:0;margin-top:2px}
+  .dlab{width:38px;text-align:center;font-size:.56rem;font-weight:800;text-transform:uppercase;color:var(--ink-soft);letter-spacing:.02em}
+  .dlab.point{width:16px}
+  .dlab.decide{color:var(--teal-deep)}
+  .verdict{text-align:center;font-size:1.35rem;font-weight:900;margin-top:12px;min-height:1.5em}
+  .verdict .big{font-size:1.7rem}
+  .whymsg{text-align:center;color:var(--ink-soft);font-weight:700;font-size:.95rem;margin-top:2px}
+
+  .we{border-left:4px solid var(--teal);padding:4px 0 4px 18px;margin:18px 0}
+  .we h3{margin-bottom:.3em}
+  .step{background:var(--teal-tint);border-radius:10px;padding:10px 14px;margin:8px 0;font-size:.98rem}
+  .step b{color:var(--teal-deep)}
+  .reveal-btn{background:none;border:1.5px solid var(--teal);color:var(--teal-deep);font-family:"Nunito";font-weight:800;font-size:.9rem;padding:7px 14px;border-radius:999px;cursor:pointer;transition:.15s}
+  .reveal-btn:hover{background:var(--teal-tint)}
+  .reveal[hidden]{display:none}
+  .misconception{background:#fff;border:1px dashed var(--coral);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:.95rem}
+  .misconception b{color:var(--coral)}
+
+  .nl-wrap{overflow-x:auto;padding:6px 0 2px}
+
+  /* tiers */
+  .tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+  .tab{flex:1;min-width:90px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:12px 8px;cursor:pointer;font-family:"Nunito";font-weight:800;text-align:center;transition:.15s;color:var(--ink-soft)}
+  .tab .dotc{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:7px;vertical-align:-1px}
+  .tab .tt{display:block;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:3px;color:var(--ink-soft)}
+  .tab[data-tier="green"] .dotc{background:var(--green)}
+  .tab[data-tier="orange"] .dotc{background:var(--orange)}
+  .tab[data-tier="red"] .dotc{background:var(--red)}
+  .tab.on{color:var(--ink);transform:translateY(-1px);box-shadow:var(--shadow)}
+  .tab.on[data-tier="green"]{border-color:var(--green);background:var(--green-tint)}
+  .tab.on[data-tier="orange"]{border-color:var(--orange);background:var(--orange-tint)}
+  .tab.on[data-tier="red"]{border-color:var(--red);background:var(--red-tint)}
+  .panel[hidden]{display:none}
+  .panel-note{font-size:.92rem;color:var(--ink-soft);margin:0 0 14px}
+
+  .cq{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 0;border-top:1px dashed var(--line)}
+  .cq:first-of-type{border-top:0}
+  .cq .num{font-weight:900;color:var(--ink-soft);min-width:22px}
+  .cq .pair{font-weight:900;font-size:1.1rem;min-width:150px}
+  .symbtns{display:flex;gap:6px}
+  .symbtn{width:44px;height:40px;border:2px solid var(--line);background:#fff;border-radius:9px;font-family:"Fraunces",serif;font-weight:900;font-size:1.2rem;cursor:pointer;color:var(--ink);transition:.12s}
+  .symbtn:hover{border-color:var(--teal)}
+  .symbtn.pick{border-color:var(--teal);background:var(--teal-tint)}
+  .symbtn.ok{border-color:var(--green);background:var(--green-tint);color:var(--green)}
+  .symbtn.no{border-color:var(--red);background:var(--red-tint);color:var(--red)}
+  .cq .mark{font-weight:900;font-size:1.1rem;min-width:18px}
+
+  .oq{padding:13px 0;border-top:1px dashed var(--line)}
+  .oq:first-of-type{border-top:0}
+  .oq .prompt{font-weight:800}
+  .oq .nums{color:var(--teal-deep);font-weight:900}
+  .oq .row2{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+  .oq input{font-family:"Nunito";font-weight:800;font-size:1rem;flex:1;min-width:200px;padding:9px 12px;border:2px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}
+  .oq input:focus{outline:none;border-color:var(--teal)}
+  .oq input.ok{border-color:var(--green);background:var(--green-tint)}
+  .oq input.no{border-color:var(--red);background:var(--red-tint)}
+  .oq .hint{font-size:.85rem;color:var(--red);margin-top:6px}
+  .oq .hint[hidden]{display:none}
+
+  .reason{padding:8px 0}
+  .reason .prompt{font-weight:800}
+  .panel-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .btn{font-family:"Nunito";font-weight:800;font-size:.95rem;padding:10px 18px;border-radius:999px;cursor:pointer;border:0;transition:.15s}
+  .btn.primary{background:var(--teal);color:#fff}
+  .btn.primary:hover{background:var(--teal-deep)}
+  .btn.ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink-soft)}
+  .btn.ghost:hover{border-color:var(--teal);color:var(--teal-deep)}
+  .score{font-weight:800;color:var(--teal-deep);align-self:center}
+
+  .note{border-radius:14px;padding:16px 20px;margin:16px 0}
+  .note.copy{background:var(--orange-tint);border:1px solid #f0d6a8}
+  .exit{background:linear-gradient(180deg,#fff,var(--teal-tint));border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+  footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9rem}
+  .next{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;font-weight:800;text-decoration:none;padding:14px 24px;border-radius:999px;box-shadow:var(--shadow);margin:6px 0 18px}
+  .next:hover{background:var(--teal-deep)}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">
+      <span>Year 5 Maths &middot; Number</span>
+      <span class="code">VC2M5N01</span>
+    </div>
+    <h1>Comparing &amp; Ordering Decimals</h1>
+    <p class="lede">Bigger, smaller, or the same? Place value tells you every time. In this lesson you will compare decimals, put them in order, and place them on a number line.</p>
+    <div class="hero-ruler" aria-hidden="true">
+      <div class="ruler"><div class="tick"></div><div class="tick"></div><div class="dot"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div></div>
+      <div class="lab"><span>ones</span><span>&middot;</span><span>tenths</span><span>hundredths</span><span>thousandths</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- LEARNING INTENTION -->
+<section>
+  <div class="wrap">
+    <div class="li">
+      <div class="card">
+        <h3><span class="badge">Learning intention</span></h3>
+        <p>We are learning to compare, order, and represent decimals.</p>
+      </div>
+      <div class="card">
+        <h3><span class="badge">Success criteria</span></h3>
+        <p class="small muted" style="margin-top:-2px">Tap each one as you get there.</p>
+        <div class="sc-item" onclick="this.classList.toggle('done')"><div class="sc-box">&check;</div><span>I can compare decimals using &lt;, &gt;, and =.</span></div>
+        <div class="sc-item" onclick="this.classList.toggle('done')"><div class="sc-box">&check;</div><span>I can use place value to order decimals.</span></div>
+        <div class="sc-item" onclick="this.classList.toggle('done')"><div class="sc-box">&check;</div><span>I can locate and represent decimals on a number line.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIG IDEA + COMPARE TOOL -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">The big idea</span>
+    <h2>Compare from the biggest place first</h2>
+    <p>Line the numbers up by place value and start at the largest place, on the left. Work right until you find a place where the digits are different. That place decides it.</p>
+    <p>The number of digits does not tell you the size. A longer decimal can be smaller. If it helps, add a zero on the end to make the lengths match, because a zero on the end of a decimal does not change its value.</p>
+
+    <div class="tool" style="margin-top:18px">
+      <p class="small muted" style="text-align:center;margin:0 0 12px">Type two decimals, then press Compare. Or tap an example.</p>
+      <div class="inputs">
+        <input id="decA" inputmode="decimal" value="2.93" aria-label="First decimal">
+        <span class="qmark">?</span>
+        <input id="decB" inputmode="decimal" value="2.891" aria-label="Second decimal">
+      </div>
+      <div class="chips" id="chips">
+        <button class="chip" data-a="2.93" data-b="2.891">2.93 vs 2.891</button>
+        <button class="chip" data-a="7.03" data-b="7.3">7.03 vs 7.3</button>
+        <button class="chip" data-a="4.3" data-b="4.30">4.3 vs 4.30</button>
+        <button class="chip" data-a="1.255" data-b="1.256">1.255 vs 1.256</button>
+      </div>
+      <div style="text-align:center;margin-top:6px">
+        <button class="btn primary" id="cmpBtn">Compare</button>
+      </div>
+      <div class="align" id="align"></div>
+      <div class="verdict" id="verdict"></div>
+      <div class="whymsg" id="whymsg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKED EXAMPLES -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Let us look together</span>
+    <h2>Worked examples</h2>
+
+    <div class="we">
+      <h3>1. Work left to right</h3>
+      <p>Compare 3.54 and 3.55. Ones match (3 = 3). Tenths match (5 = 5). Hundredths differ: 4 is less than 5.</p>
+      <div class="step">3.54 <span class="sym">&lt;</span> 3.55</div>
+    </div>
+
+    <div class="we">
+      <h3>2. Longer is not always larger</h3>
+      <p>Compare 7.03 and 7.3. Make the lengths match: 7.03 and 7.30. Tenths: 0 is less than 3.</p>
+      <div class="step">7.03 <span class="sym">&lt;</span> 7.3 &nbsp; <span class="muted small">(the longer looking one is smaller)</span></div>
+    </div>
+
+    <div class="we">
+      <h3>3. The digit counting trap</h3>
+      <p>Emily says 2.93 must be smaller because it has fewer digits. Hari says 2.891 must be bigger because it has more digits. Both are wrong.</p>
+      <button class="reveal-btn" onclick="const r=this.nextElementSibling;r.hidden=!r.hidden;this.textContent=r.hidden?'Who is right?':'Hide'">Who is right?</button>
+      <div class="reveal" hidden>
+        <div class="step">Match the lengths: 2.930 and 2.891. Tenths: 9 is greater than 8, so 2.93 <span class="sym">&gt;</span> 2.891.</div>
+        <div class="misconception"><b>Careful:</b> counting digits does not work. Compare place by place, starting from the left.</div>
+      </div>
+    </div>
+
+    <div class="we">
+      <h3>4. A zero on the end changes nothing</h3>
+      <p>Compare 4.3 and 4.30. The extra zero is in the hundredths place and adds nothing.</p>
+      <div class="step">4.3 <span class="sym">=</span> 4.30</div>
+    </div>
+
+    <div class="we">
+      <h3>5. Ordering is just comparing, again and again</h3>
+      <p>Put 4.3, 4.44, 4.34, and 4.43 in ascending order. Line up the tenths first, then the hundredths.</p>
+      <div class="step">4.3, 4.34, 4.43, 4.44</div>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBER LINE -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Represent it</span>
+    <h2>Place them on a number line</h2>
+    <p>A number line settles any argument. Between 2.89 and 2.94, each small mark is one thousandth. Here are Emily's and Hari's numbers.</p>
+    <div class="nl-wrap">
+      <svg viewBox="0 0 740 130" width="100%" style="min-width:660px" role="img" aria-label="Number line from 2.89 to 2.94 with 2.891 and 2.93 marked">
+        <line x1="60" y1="78" x2="700" y2="78" stroke="#22283b" stroke-width="3"/>
+        <polygon points="700,78 688,72 688,84" fill="#22283b"/>
+        <g id="nlminor" stroke="#c9c2b3" stroke-width="1.5"></g>
+        <g stroke="#22283b" stroke-width="3">
+          <line x1="60" y1="66" x2="60" y2="90"/><line x1="184" y1="66" x2="184" y2="90"/><line x1="308" y1="66" x2="308" y2="90"/>
+          <line x1="432" y1="66" x2="432" y2="90"/><line x1="556" y1="66" x2="556" y2="90"/><line x1="680" y1="66" x2="680" y2="90"/>
+        </g>
+        <g font-family="Nunito" font-weight="800" text-anchor="middle" fill="#0a5c53" font-size="14">
+          <text x="60" y="110">2.89</text><text x="184" y="110">2.90</text><text x="308" y="110">2.91</text>
+          <text x="432" y="110">2.92</text><text x="556" y="110">2.93</text><text x="680" y="110">2.94</text>
+        </g>
+        <!-- 2.891 at x = 60 + 0.001*12400 = 72.4 -->
+        <circle cx="72.4" cy="78" r="7" fill="#ef6461"/>
+        <text x="72.4" y="52" font-family="Nunito" font-weight="900" text-anchor="middle" fill="#c0392b" font-size="14">2.891</text>
+        <!-- 2.93 at x = 556 -->
+        <circle cx="556" cy="78" r="7" fill="#0f8a7d"/>
+        <text x="556" y="40" font-family="Nunito" font-weight="900" text-anchor="middle" fill="#0a5c53" font-size="14">2.93</text>
+      </svg>
+    </div>
+    <p class="small muted">2.93 sits well to the right of 2.891, so it is the greater number.</p>
+  </div>
+</section>
+
+<!-- TIERED PRACTICE -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Your turn &middot; must complete work</span>
+    <h2>Choose your starting point</h2>
+    <p class="muted">Start where you feel ready, then push up a tier. Copy each question and your answer into your maths book as you go.</p>
+
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-tier="green"><span class="dotc"></span>Green<span class="tt">Compare &amp; order tenths</span></button>
+      <button class="tab" data-tier="orange"><span class="dotc"></span>Orange<span class="tt">Thousandths &amp; trailing zeros</span></button>
+      <button class="tab" data-tier="red"><span class="dotc"></span>Red<span class="tt">Reasoning &amp; number line</span></button>
+    </div>
+
+    <div class="card">
+      <div class="panel" data-tier="green"></div>
+      <div class="panel" data-tier="orange" hidden></div>
+      <div class="panel" data-tier="red" hidden></div>
+    </div>
+
+    <div class="note copy">
+      <b>No need to print.</b> Copy the questions straight into your maths book, then check them here. If an answer was wrong, line the numbers up by place value and look again, and always have another go. If you cannot spot the error, ask a teacher.
+    </div>
+  </div>
+</section>
+
+<!-- EXIT TICKET -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Exit ticket</span>
+    <h2>Before you move on</h2>
+    <div class="exit">
+      <p class="muted" style="margin-top:0">Answer all three, then check. Aim for three out of three.</p>
+      <div class="panel" id="exitPanel"></div>
+      <div class="panel-actions">
+        <button class="btn primary" id="exitCheck">Check my exit ticket</button>
+        <span class="score" id="exitScore"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WRAP UP -->
+<section style="text-align:center">
+  <div class="wrap">
+    <span class="eyebrow">Nearly there</span>
+    <h2>Look back at your success criteria</h2>
+    <p class="muted">Can you tick all three boxes now? When you can, move on to your Mathspace task.</p>
+    <a class="next" href="https://mathspace.co/student/tasks/TopicCustomTask-850179/" target="_blank" rel="noopener">Open the Mathspace task &rarr;</a>
+    <div class="ruler" style="max-width:280px;margin:8px auto 0" aria-hidden="true"><div class="tick"></div><div class="tick"></div><div class="dot"></div><div class="tick"></div><div class="tick"></div></div>
+  </div>
+</section>
+
+<footer><div class="wrap">Year 5 Mathematics &middot; Comparing and Ordering Decimals &middot; Aligned to Victorian Curriculum 2.0</div></footer>
+
+<script>
+/* ---------------- compare tool ---------------- */
+const FLABELS = ["tenths","hundredths","thousandths","ten thousandths"];
+const ILABELS = ["ones","tens","hundreds","thousands"];
+function validDec(s){ return /^\d+(\.\d+)?$/.test(s.trim()); }
+function compareParts(a,b){
+  const [ai, af=""] = a.split(".");
+  const [bi, bf=""] = b.split(".");
+  const iLen = Math.max(ai.length, bi.length);
+  const fLen = Math.max(af.length, bf.length);
+  const aI = ai.padStart(iLen,"0"), bI = bi.padStart(iLen,"0");
+  const aF = af.padEnd(fLen,"0"),  bF = bf.padEnd(fLen,"0");
+  const aFull = aI+aF, bFull = bI+bF;
+  let decide=-1, cmp=0;
+  for(let k=0;k<aFull.length;k++){ if(aFull[k]!==bFull[k]){ decide=k; cmp = aFull[k]>bFull[k]?1:-1; break; } }
+  return {aI,aF,bI,bF,iLen,fLen,decide,cmp};
+}
+function renderRow(intStr, fracStr, iLen, decideK){
+  const row = document.createElement("div"); row.className="drow";
+  for(let p=0;p<iLen;p++){
+    const c=document.createElement("div"); c.className="dcell"; c.textContent=intStr[p];
+    if(decideK===p) c.classList.add("decide");
+    row.appendChild(c);
+  }
+  const pt=document.createElement("div"); pt.className="dcell point"; pt.textContent="."; row.appendChild(pt);
+  for(let p=0;p<fracStr.length;p++){
+    const c=document.createElement("div"); c.className="dcell"; c.textContent=fracStr[p];
+    if(decideK===iLen+p) c.classList.add("decide");
+    row.appendChild(c);
+  }
+  return row;
+}
+function renderLabels(iLen, fLen, decideK){
+  const row=document.createElement("div"); row.className="dlabels";
+  for(let p=0;p<iLen;p++){
+    const c=document.createElement("div"); c.className="dlab"; c.textContent=ILABELS[iLen-1-p]||"";
+    if(decideK===p) c.classList.add("decide"); row.appendChild(c);
+  }
+  const pt=document.createElement("div"); pt.className="dlab point"; row.appendChild(pt);
+  for(let p=0;p<fLen;p++){
+    const c=document.createElement("div"); c.className="dlab"; c.textContent=FLABELS[p]||"";
+    if(decideK===iLen+p) c.classList.add("decide"); row.appendChild(c);
+  }
+  return row;
+}
+function runCompare(){
+  const a=document.getElementById("decA").value.trim();
+  const b=document.getElementById("decB").value.trim();
+  const align=document.getElementById("align");
+  const verdict=document.getElementById("verdict");
+  const why=document.getElementById("whymsg");
+  align.innerHTML=""; verdict.innerHTML=""; why.textContent="";
+  if(!validDec(a)||!validDec(b)){ verdict.innerHTML='<span class="muted" style="font-size:1rem;font-weight:700">Type two decimals, for example 3.5 and 3.45.</span>'; return; }
+  const r=compareParts(a,b);
+  align.appendChild(renderRow(r.aI, r.aF, r.iLen, r.decide));
+  align.appendChild(renderRow(r.bI, r.bF, r.iLen, r.decide));
+  align.appendChild(renderLabels(r.iLen, r.fLen, r.decide));
+  const sym = r.cmp>0 ? "&gt;" : (r.cmp<0 ? "&lt;" : "=");
+  verdict.innerHTML = '<span class="dec">'+a+'</span> <span class="big sym">'+sym+'</span> <span class="dec">'+b+'</span>';
+  if(r.decide===-1){ why.textContent="Every place matches, so the numbers are equal. Trailing zeros change nothing."; }
+  else {
+    const k=r.decide;
+    const place = k < r.iLen ? (ILABELS[r.iLen-1-k]||"a whole place") : (FLABELS[k-r.iLen]||"a small place");
+    why.textContent="First difference is in the "+place+" place. That place decides it.";
+  }
+}
+document.getElementById("cmpBtn").addEventListener("click", runCompare);
+[document.getElementById("decA"),document.getElementById("decB")].forEach(inp=>inp.addEventListener("keydown",e=>{ if(e.key==="Enter") runCompare(); }));
+document.querySelectorAll("#chips .chip").forEach(ch=>ch.addEventListener("click",()=>{
+  document.getElementById("decA").value=ch.dataset.a;
+  document.getElementById("decB").value=ch.dataset.b;
+  runCompare();
+}));
+runCompare();
+
+/* ---------------- practice data ---------------- */
+function symOf(a,b){ const r=compareParts(String(a),String(b)); return r.cmp>0?">":(r.cmp<0?"<":"="); }
+const COMPARE = {
+  green:[["1.2","1.1"],["3.54","3.55"],["8.5","8.62"],["4.3","4.30"],["12.9","12.92"]],
+  orange:[["1.255","1.256"],["7.03","7.3"],["6.619","5.619"],["19.98","19.99"],["22.605","22.650"]],
+  red:[["9.88","9.999"],["16.88","16.08"],["44.2","44.21"]]
+};
+const ORDER = {
+  green:[{nums:["4.3","4.44","4.34","4.43"]}],
+  orange:[{nums:["1.11","1.1","1.101","1.01"]},{nums:["0.12","0.01","0.001","0.1"]}],
+  red:[{nums:["2.7","3.7","7.3","7.2","7.02"]},{nums:["7.2","6.4","6.3","6.49","7","6.5"]}]
+};
+const REASON = {
+  red:[{ prompt:"Emily says 2.93 must be smaller than 2.891 because it has fewer digits. Do you agree? Explain using place value.",
+         model:"No. Counting digits does not work for decimals. Line the numbers up as 2.930 and 2.891 and compare place by place. The ones and tens are the same, but in the tenths place 9 is greater than 8, so 2.93 is greater than 2.891. On a number line, 2.93 sits to the right of 2.891."}]
+};
+
+function ascending(nums){ return nums.slice().map(Number).sort((x,y)=>x-y); }
+function normOrder(str){ return str.trim().split(/[,\s]+/).filter(Boolean).map(Number); }
+function arrEq(a,b){ return a.length===b.length && a.every((v,i)=>v===b[i]); }
+
+/* build compare question */
+function buildCompare(pair, idx){
+  const [a,b]=pair, correct=symOf(a,b);
+  const wrap=document.createElement("div"); wrap.className="cq";
+  wrap.innerHTML='<span class="num">'+(idx+1)+'</span><span class="pair">'+a+' &nbsp;____&nbsp; '+b+'</span>';
+  const btns=document.createElement("div"); btns.className="symbtns";
+  ["<","=",">"].forEach(s=>{
+    const btn=document.createElement("button"); btn.className="symbtn"; btn.textContent=s;
+    btn.addEventListener("click",()=>{
+      btns.querySelectorAll(".symbtn").forEach(x=>x.classList.remove("pick","ok","no"));
+      btn.classList.add("pick"); wrap._picked=s; wrap._correct=correct;
+      wrap.querySelector(".mark").textContent="";
+    });
+    btns.appendChild(btn);
+  });
+  wrap.appendChild(btns);
+  const mark=document.createElement("span"); mark.className="mark"; wrap.appendChild(mark);
+  wrap._check=()=>{
+    if(!wrap._picked) return null;
+    const ok = wrap._picked===correct;
+    btns.querySelectorAll(".symbtn").forEach(x=>{ x.classList.remove("ok","no");
+      if(x.textContent===wrap._picked) x.classList.add(ok?"ok":"no"); });
+    mark.textContent = ok?"✓":"✕"; mark.style.color = ok?"var(--green)":"var(--red)";
+    return ok;
+  };
+  wrap._reveal=()=>{ btns.querySelectorAll(".symbtn").forEach(x=>{ x.classList.remove("pick","ok","no"); if(x.textContent===correct) x.classList.add("ok"); }); mark.textContent="✓"; mark.style.color="var(--green)"; wrap._picked=correct; };
+  return wrap;
+}
+/* build order question */
+function buildOrder(q, idx){
+  const wrap=document.createElement("div"); wrap.className="oq";
+  const answer=ascending(q.nums);
+  wrap.innerHTML='<div class="prompt">Order (a) '+(idx+1)+': write these in ascending order &nbsp; <span class="nums">'+q.nums.join(", ")+'</span></div>';
+  const row=document.createElement("div"); row.className="row2";
+  const input=document.createElement("input"); input.placeholder="smallest to largest, separated by commas"; row.appendChild(input);
+  wrap.appendChild(row);
+  const hint=document.createElement("div"); hint.className="hint"; hint.hidden=true; hint.textContent="Not yet. Line up the tenths first, then the hundredths, then the thousandths."; wrap.appendChild(hint);
+  input.addEventListener("input",()=>{ input.classList.remove("ok","no"); hint.hidden=true; });
+  wrap._check=()=>{
+    if(input.value.trim()==="") return null;
+    const ok=arrEq(normOrder(input.value), answer);
+    input.classList.toggle("ok",ok); input.classList.toggle("no",!ok); hint.hidden=ok; return ok;
+  };
+  wrap._reveal=()=>{ input.value=answer.join(", "); input.classList.remove("no"); input.classList.add("ok"); hint.hidden=true; };
+  return wrap;
+}
+/* build reasoning question */
+function buildReason(q){
+  const wrap=document.createElement("div"); wrap.className="reason";
+  wrap.innerHTML='<div class="prompt">'+q.prompt+'</div>';
+  const btn=document.createElement("button"); btn.className="reveal-btn"; btn.style.marginTop="8px"; btn.textContent="Show a model answer";
+  const ans=document.createElement("div"); ans.className="step"; ans.hidden=true; ans.style.marginTop="8px"; ans.textContent=q.model;
+  btn.addEventListener("click",()=>{ ans.hidden=!ans.hidden; btn.textContent=ans.hidden?"Show a model answer":"Hide"; });
+  wrap.appendChild(btn); wrap.appendChild(ans);
+  wrap._check=()=>null; wrap._reveal=()=>{ ans.hidden=false; btn.textContent="Hide"; };
+  return wrap;
+}
+
+/* assemble panels */
+["green","orange","red"].forEach(tier=>{
+  const panel=document.querySelector('.panel[data-tier="'+tier+'"]');
+  const note=document.createElement("p"); note.className="panel-note";
+  note.textContent = tier==="green" ? "Compare with the symbols, then put a set in order."
+    : tier==="orange" ? "Thousandths and trailing zeros. Line up the place values carefully."
+    : "Explain your thinking, order the trickier sets, and use the number line.";
+  panel.appendChild(note);
+
+  const items=[];
+  const cHead=document.createElement("p"); cHead.className="small muted"; cHead.style.margin="4px 0"; cHead.innerHTML="<b>Compare</b> with &lt;, =, or &gt;";
+  panel.appendChild(cHead);
+  COMPARE[tier].forEach((p,i)=>{ const q=buildCompare(p,i); panel.appendChild(q); items.push(q); });
+
+  const oHead=document.createElement("p"); oHead.className="small muted"; oHead.style.margin="14px 0 4px"; oHead.innerHTML="<b>Order</b> from smallest to largest";
+  panel.appendChild(oHead);
+  ORDER[tier].forEach((q,i)=>{ const el=buildOrder(q,i); panel.appendChild(el); items.push(el); });
+
+  if(REASON[tier]){
+    const rHead=document.createElement("p"); rHead.className="small muted"; rHead.style.margin="14px 0 4px"; rHead.innerHTML="<b>Explain</b> your reasoning";
+    panel.appendChild(rHead);
+    REASON[tier].forEach(q=>{ const el=buildReason(q); panel.appendChild(el); items.push(el); });
+  }
+
+  const actions=document.createElement("div"); actions.className="panel-actions";
+  const check=document.createElement("button"); check.className="btn primary"; check.textContent="Check my answers";
+  const reveal=document.createElement("button"); reveal.className="btn ghost"; reveal.textContent="Show answers";
+  const score=document.createElement("span"); score.className="score";
+  check.addEventListener("click",()=>{ let r=0,t=0; items.forEach(q=>{ const res=q._check(); if(res!==null){t++; if(res)r++;} }); score.textContent=t?(r+" / "+t):""; });
+  reveal.addEventListener("click",()=>items.forEach(q=>q._reveal&&q._reveal()));
+  actions.appendChild(check); actions.appendChild(reveal); actions.appendChild(score);
+  panel.appendChild(actions);
+});
+
+/* exit ticket */
+const EXIT_C=[["3.6","3.06"],["0.5","0.50"]];
+const EXIT_O={nums:["1.2","1.15","1.25","1.05"]};
+const exitPanel=document.getElementById("exitPanel");
+const exitItems=[];
+const eh=document.createElement("p"); eh.className="small muted"; eh.style.margin="0 0 4px"; eh.innerHTML="<b>Compare</b>"; exitPanel.appendChild(eh);
+EXIT_C.forEach((p,i)=>{ const q=buildCompare(p,i); exitPanel.appendChild(q); exitItems.push(q); });
+const eh2=document.createElement("p"); eh2.className="small muted"; eh2.style.margin="12px 0 4px"; eh2.innerHTML="<b>Order</b>"; exitPanel.appendChild(eh2);
+const eo=buildOrder(EXIT_O,0); exitPanel.appendChild(eo); exitItems.push(eo);
+document.getElementById("exitCheck").addEventListener("click",()=>{
+  let r=0,t=0; exitItems.forEach(q=>{ const res=q._check(); if(res!==null){t++; if(res)r++;} });
+  document.getElementById("exitScore").textContent=t?(r+" / "+t):"";
+});
+
+/* tabs */
+document.querySelectorAll("#tabs .tab").forEach(tab=>{
+  tab.addEventListener("click",()=>{
+    document.querySelectorAll("#tabs .tab").forEach(t=>t.classList.remove("on"));
+    tab.classList.add("on");
+    const tier=tab.dataset.tier;
+    document.querySelectorAll('section .panel[data-tier]').forEach(p=>{ p.hidden = p.dataset.tier!==tier; });
+  });
+});
+
+/* number line minor ticks (2.89 to 2.94, every 0.001) */
+(function(){
+  const g=document.getElementById("nlminor"); if(!g) return;
+  const x0=60, per=12400; // px per unit
+  for(let i=1;i<50;i++){ if(i%10===0) continue; const x=x0+i*0.001*per;
+    const l=document.createElementNS("http://www.w3.org/2000/svg","line");
+    l.setAttribute("x1",x); l.setAttribute("x2",x); l.setAttribute("y1",70); l.setAttribute("y2",86); g.appendChild(l);
+  }
+})();
+</script>
+</body>
+</html>
