@@ -20,33 +20,50 @@
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Nunito",system-ui,sans-serif;font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+  html{font-size:18px}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Nunito",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    font-size:21px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px}
   h1,h2,h3{font-family:"Fraunces",Georgia,serif;color:var(--ink);line-height:1.15;margin:0}
-  h2{font-size:1.72rem;font-weight:600;margin-bottom:.35em}
-  h3{font-size:1.18rem;font-weight:600}
+  h2{font-size:2.3rem;font-weight:600;margin-bottom:.35em}
+  h3{font-size:1.3rem;font-weight:600}
   p{margin:.5em 0}
   a{color:var(--teal-deep);font-weight:700}
-  .eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-deep)}
+  .eyebrow{
+    font-size:15.078px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--teal-deep);
+  }
   .ruler{display:flex;align-items:center;gap:0;height:26px}
   .ruler .tick{flex:1;height:2px;background:var(--line);position:relative}
   .ruler .tick::after{content:"";position:absolute;right:0;top:-6px;width:2px;height:14px;background:var(--line)}
   .ruler .dot{width:11px;height:11px;border-radius:50%;background:var(--coral);flex:0 0 auto;margin:0 3px}
 
-  header.hero{padding:56px 0 34px;border-bottom:1px solid var(--line);background:radial-gradient(120% 80% at 78% -10%, var(--teal-tint) 0%, rgba(230,244,241,0) 55%)}
-  .hero .eyebrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  /* ---------- hero ---------- */
+  header.hero{padding:40px 0 118px;border-bottom:1px solid var(--line);background:
+    radial-gradient(120% 80% at 78% -10%, var(--teal-tint) 0%, rgba(230,244,241,0) 55%);}
+  .hero .eyebrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:15.078px}
   .hero .code{background:#fff;border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--ink-soft);letter-spacing:.04em}
-  .hero h1{font-size:clamp(2.3rem,6.5vw,3.5rem);font-weight:900;margin:.18em 0 .1em;letter-spacing:-.01em}
-  .hero .lede{font-size:1.12rem;color:var(--ink-soft);max-width:34em}
-  .hero-ruler{margin:26px 0 6px}
+  .hero h1{font-size:44px;font-weight:900;margin:.18em 0 .1em;letter-spacing:-.01em}
+  .hero .lede{font-size:22.617px;color:var(--ink-soft);max-width:34em}
+  .hero-ruler{margin:30px 0 6px}
   .hero-ruler .lab{display:flex;justify-content:space-between;font-size:.72rem;color:var(--ink-soft);font-weight:700;margin-top:6px}
 
   section{padding:40px 0;border-bottom:1px solid var(--line)}
   .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow)}
+  .card + .card{margin-top:16px}
   .muted{color:var(--ink-soft)} .small{font-size:.9rem}
 
   .li{display:grid;gap:16px}
+  .li .card + .card{margin-top:0}
   @media(min-width:680px){.li{grid-template-columns:1fr 1fr}}
+  .li .card h3{display:flex;align-items:center;gap:8px;margin-bottom:.4em}
   .badge{font-family:"Nunito";font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--teal-tint);color:var(--teal-deep);padding:3px 9px;border-radius:999px}
   .sc-item{display:flex;gap:12px;align-items:flex-start;padding:9px 0;cursor:pointer;user-select:none}
   .sc-item + .sc-item{border-top:1px dashed var(--line)}
@@ -146,33 +163,67 @@
   footer{padding:34px 0 60px;text-align:center;color:var(--ink-soft);font-size:.9rem}
   .next{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;font-weight:800;text-decoration:none;padding:14px 24px;border-radius:999px;box-shadow:var(--shadow);margin:6px 0 18px}
   .next:hover{background:var(--teal-deep)}
+
   @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+  /* ---------- slide deck layout ---------- */
+  html,body{height:100%}
+  body{overflow:hidden}
+  .slides{position:relative;height:100vh;width:100%}
+  .slide{
+    position:absolute;inset:0;
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    justify-content:safe center;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:72px 24px 128px;
+  }
+  .slide.active{display:flex}
+  .slide-intro{max-width:760px;margin:0 auto 26px;text-align:center}
+  .slide-intro .eyebrow{display:block;margin-bottom:14px}
+  .slide-intro h2{text-align:center}
+  .slide-intro p{text-align:center;font-size:22.617px;font-weight:600;color:var(--ink-soft)}
+
+  .progress-track{position:fixed;top:0;left:0;right:0;height:5px;background:var(--line);z-index:59}
+  .progress-bar{position:fixed;top:0;left:0;height:5px;background:var(--teal);width:0%;z-index:60;transition:width .25s ease}
+
+  .slide-nav{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);display:flex;align-items:center;gap:18px;z-index:50}
+  .slide-arrow{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--line);background:#fff;font-size:22.4px;cursor:pointer;color:var(--ink);display:grid;place-items:center;transition:.15s}
+  .slide-arrow:hover{border-color:var(--teal-deep);color:var(--teal-deep)}
+  .slide-arrow:focus-visible{outline:none;box-shadow:0 0 0 4px rgba(239,100,97,.22)}
+  .slide-arrow:disabled{opacity:.3;cursor:default;color:var(--ink);border-color:var(--line)}
+  .slide-dots{display:flex;gap:9px;align-items:center}
+  .slide-dot{width:9px;height:9px;border-radius:50%;background:var(--line);border:0;padding:0;cursor:pointer;transition:.15s}
+  .slide-dot.on{background:var(--teal);transform:scale(1.35)}
+  .slide-hint{position:fixed;left:24px;bottom:38px;font-size:.82rem;font-weight:700;color:var(--ink-soft);z-index:50}
+  .slide-counter{position:fixed;right:24px;bottom:38px;font-size:.82rem;font-weight:800;color:var(--ink-soft);z-index:50}
+  @media (max-width:600px){
+    .slide-hint{display:none}
+    .slide{padding:56px 18px 118px}
+    .tabs{flex-direction:column}
+  }
 </style>
 </head>
 <body>
 
-<header class="hero">
+<div class="progress-track"></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="slides" id="slides">
+
+<header class="hero slide active">
   <div class="wrap">
     <div class="eyebrow">
       <span>Year 5 Maths &middot; Number</span>
       <span class="code">VC2M5N01</span>
     </div>
-    <h1>5.2 Compare, order and represent decimals </h1>
+    <h1>5.2 Compare, order and represent decimals</h1>
     <p class="lede">Bigger, smaller, or the same? Place value tells you every time. <br>In this lesson you will compare decimals, put them in order, and place them on a number line.</p>
-    <div class="hero-ruler" aria-hidden="true">
-      <div class="ruler"><div class="tick"></div><div class="tick"></div><div class="dot"></div><div class="tick"></div><div class="tick"></div><div class="tick"></div></div>
-      <div class="lab"><span>ones</span><span>&middot;</span><span>tenths</span><span>hundredths</span><span>thousandths</span></div>
-    </div>
-  </div>
-</header>
 
-
-
-
-<!-- LEARNING INTENTION -->
-<section>
-  <div class="wrap">
-    <div class="li">
+    <!-- LEARNING INTENTION -->
+    <div class="li" style="margin-top:26px">
       <div class="card">
         <h3><span class="badge">Learning intention</span></h3>
         <p>We are learning to compare, order, and represent decimals.</p>
@@ -186,15 +237,16 @@
       </div>
     </div>
   </div>
-</section>
+</header>
 
 <!-- BIG IDEA + COMPARE TOOL -->
-<section>
+<section class="slide">
   <div class="wrap">
-    <span class="eyebrow">The big idea</span>
-    <h2>Compare from the biggest place first</h2>
-    <p>Line the numbers up by place value and start at the largest place, on the left. Work right until you find a place where the digits are different. That place decides it.</p>
-    <p>The number of digits does not tell you the size. A longer decimal can be smaller. If it helps, add a zero on the end to make the lengths match, because a zero on the end of a decimal does not change its value.</p>
+    <div class="slide-intro">
+      <span class="eyebrow">The big idea</span>
+      <h2>Compare from the biggest place first</h2>
+      <p>Line the numbers up by place value and start at the largest place, on the left. Work right until you find a place where the digits are different. That place decides it.</p>
+    </div>
 
     <div class="tool" style="margin-top:18px">
       <p class="small muted" style="text-align:center;margin:0 0 12px">Type two decimals, then press Compare. Or tap an example.</p>
@@ -220,10 +272,12 @@
 </section>
 
 <!-- WORKED EXAMPLES -->
-<section>
+<section class="slide">
   <div class="wrap">
-    <span class="eyebrow">Let us look together</span>
-    <h2>Worked examples</h2>
+    <div class="slide-intro">
+      <span class="eyebrow">Let us look together</span>
+      <h2>Worked examples</h2>
+    </div>
 
     <div class="we">
       <h3>1. Work left to right</h3>
@@ -262,11 +316,13 @@
 </section>
 
 <!-- NUMBER LINE -->
-<section>
+<section class="slide">
   <div class="wrap">
-    <span class="eyebrow">Represent it</span>
-    <h2>Place them on a number line</h2>
-    <p>A number line settles any argument. Between 2.89 and 2.94, each small mark is one thousandth. Here are Emily's and Hari's numbers.</p>
+    <div class="slide-intro">
+      <span class="eyebrow">Represent it</span>
+      <h2>Place them on a number line</h2>
+      <p>A number line settles any argument. Between 2.89 and 2.94, each small mark is one thousandth. Here are Emily's and Hari's numbers.</p>
+    </div>
     <div class="nl-wrap">
       <svg viewBox="0 0 740 130" width="100%" style="min-width:660px" role="img" aria-label="Number line from 2.89 to 2.94 with 2.891 and 2.93 marked">
         <line x1="60" y1="78" x2="700" y2="78" stroke="#22283b" stroke-width="3"/>
@@ -288,16 +344,18 @@
         <text x="556" y="40" font-family="Nunito" font-weight="900" text-anchor="middle" fill="#0a5c53" font-size="14">2.93</text>
       </svg>
     </div>
-    <p class="small muted">2.93 sits well to the right of 2.891, so it is the greater number.</p>
+    <p class="small muted" style="text-align:center">2.93 sits well to the right of 2.891, so it is the greater number.</p>
   </div>
 </section>
 
 <!-- TIERED PRACTICE -->
-<section>
+<section class="slide">
   <div class="wrap">
-    <span class="eyebrow">Your turn &middot; must complete work</span>
-    <h2>Choose your starting point</h2>
-    <p class="muted">Start where you feel ready, then push up a tier. Copy each question and your answer into your maths book as you go.</p>
+    <div class="slide-intro">
+      <span class="eyebrow">Your turn &middot; must complete work</span>
+      <h2>Choose your starting point</h2>
+      <p class="muted">Start where you feel ready, then push up a tier. Copy each question and your answer into your maths book as you go.</p>
+    </div>
 
     <div class="tabs" id="tabs">
       <button class="tab on" data-tier="green"><span class="dotc"></span>Green<span class="tt">Compare &amp; order tenths</span></button>
@@ -318,10 +376,12 @@
 </section>
 
 <!-- EXIT TICKET -->
-<section>
+<section class="slide">
   <div class="wrap">
-    <span class="eyebrow">Exit ticket</span>
-    <h2>Before you move on</h2>
+    <div class="slide-intro">
+      <span class="eyebrow">Exit ticket</span>
+      <h2>Before you move on</h2>
+    </div>
     <div class="exit">
       <p class="muted" style="margin-top:0">Answer all three, then check. Aim for three out of three.</p>
       <div class="panel" id="exitPanel"></div>
@@ -334,17 +394,26 @@
 </section>
 
 <!-- WRAP UP -->
-<section style="text-align:center">
+<section class="slide" style="text-align:center">
   <div class="wrap">
     <span class="eyebrow">Nearly there</span>
     <h2>Look back at your success criteria</h2>
     <p class="muted">Can you tick all three boxes now? When you can, move on to your Mathspace task.</p>
     <a class="next" href="https://mathspace.co/student/tasks/TopicCustomTask-850179/" target="_blank" rel="noopener">Open the Mathspace task &rarr;</a>
     <div class="ruler" style="max-width:280px;margin:8px auto 0" aria-hidden="true"><div class="tick"></div><div class="tick"></div><div class="dot"></div><div class="tick"></div><div class="tick"></div></div>
+    <footer style="padding:34px 0 0;text-align:center;color:var(--ink-soft);font-size:.9rem">Year 5 Mathematics &middot; Comparing and Ordering Decimals &middot; Aligned to Victorian Curriculum 2.0</footer>
   </div>
 </section>
 
-<footer><div class="wrap">Year 5 Mathematics &middot; Comparing and Ordering Decimals &middot; Aligned to Victorian Curriculum 2.0</div></footer>
+</div><!-- /.slides -->
+
+<div class="slide-nav">
+  <button class="slide-arrow" id="slidePrev" type="button" aria-label="Previous slide">&larr;</button>
+  <div class="slide-dots" id="slideDots"></div>
+  <button class="slide-arrow" id="slideNext" type="button" aria-label="Next slide">&rarr;</button>
+</div>
+<p class="slide-hint">Arrow keys or space to move</p>
+<p class="slide-counter" id="slideCounter"></p>
 
 <script>
 /* ---------------- compare tool ---------------- */
@@ -566,6 +635,53 @@ document.querySelectorAll("#tabs .tab").forEach(tab=>{
     const l=document.createElementNS("http://www.w3.org/2000/svg","line");
     l.setAttribute("x1",x); l.setAttribute("x2",x); l.setAttribute("y1",70); l.setAttribute("y2",86); g.appendChild(l);
   }
+})();
+
+/* ---------------- slide deck navigation ---------------- */
+(function(){
+  const slideEls = Array.from(document.querySelectorAll('.slide'));
+  const total = slideEls.length;
+  const dotsWrap = document.getElementById('slideDots');
+  const prevBtn = document.getElementById('slidePrev');
+  const nextBtn = document.getElementById('slideNext');
+  const counter = document.getElementById('slideCounter');
+  const progressBar = document.getElementById('progressBar');
+  let cur = 0;
+
+  slideEls.forEach((s,i)=>{
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'slide-dot' + (i===0?' on':'');
+    dot.setAttribute('aria-label','Go to slide '+(i+1));
+    dot.addEventListener('click',()=>go(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = dotsWrap.querySelectorAll('.slide-dot');
+
+  function go(i){
+    cur = Math.max(0, Math.min(total-1, i));
+    slideEls.forEach((s,k)=>s.classList.toggle('active', k===cur));
+    dots.forEach((d,k)=>d.classList.toggle('on', k===cur));
+    prevBtn.disabled = cur===0;
+    nextBtn.disabled = cur===total-1;
+    counter.textContent = (cur+1)+' / '+total;
+    progressBar.style.width = ((cur+1)/total*100)+'%';
+    slideEls[cur].scrollTop = 0;
+  }
+
+  prevBtn.addEventListener('click',()=>go(cur-1));
+  nextBtn.addEventListener('click',()=>go(cur+1));
+
+  document.addEventListener('keydown', e=>{
+    const t = e.target;
+    const tag = (t.tagName||'').toLowerCase();
+    if(tag==='input' || tag==='textarea') return;
+    if(e.key===' ' && (tag==='button' || tag==='a')) return;
+    if(e.key==='ArrowRight' || e.key===' '){ e.preventDefault(); go(cur+1); }
+    else if(e.key==='ArrowLeft'){ e.preventDefault(); go(cur-1); }
+  });
+
+  go(0);
 })();
 </script>
 </body>
