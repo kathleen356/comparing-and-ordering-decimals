@@ -353,12 +353,11 @@
   <div class="wrap">
     <div class="slide-intro">
       <span class="eyebrow">Your turn &middot; must complete work</span>
-      <h2>Choose your starting point</h2>
-      <p class="muted">Start where you feel ready, then push up a tier. Copy each question and your answer into your maths book as you go.</p>
+      
     </div>
 
     <div class="tabs" id="tabs">
-      <button class="tab on" data-tier="green"><span class="dotc"></span>Green<span class="tt">Compare &amp; order tenths</span></button>
+      <button class="tab on" data-tier="green"><span class="dotc"></span>Green<span class="tt">Compare with the symbols, then put a set in order.</span></button>
       <button class="tab" data-tier="orange"><span class="dotc"></span>Orange<span class="tt">Thousandths &amp; trailing zeros</span></button>
       <button class="tab" data-tier="red"><span class="dotc"></span>Red<span class="tt">Reasoning &amp; number line</span></button>
     </div>
@@ -369,9 +368,7 @@
       <div class="panel" data-tier="red" hidden></div>
     </div>
 
-    <div class="note copy">
-      <b>No need to print.</b> Copy the questions straight into your maths book, then check them here. If an answer was wrong, line the numbers up by place value and look again, and always have another go. If you cannot spot the error, ask a teacher.
-    </div>
+    
   </div>
 </section>
 
@@ -573,9 +570,9 @@ function buildReason(q){
 ["green","orange","red"].forEach(tier=>{
   const panel=document.querySelector('.panel[data-tier="'+tier+'"]');
   const note=document.createElement("p"); note.className="panel-note";
-  note.textContent = tier==="green" ? "Compare with the symbols, then put a set in order."
-    : tier==="orange" ? "Thousandths and trailing zeros. Line up the place values carefully."
-    : "Explain your thinking, order the trickier sets, and use the number line.";
+  note.textContent = tier==="green" ? ""
+    : tier==="orange" ? ""
+    : "";
   panel.appendChild(note);
 
   const items=[];
