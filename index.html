@@ -164,6 +164,34 @@
   .next{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;font-weight:800;text-decoration:none;padding:14px 24px;border-radius:999px;box-shadow:var(--shadow);margin:6px 0 18px}
   .next:hover{background:var(--teal-deep)}
 
+  /* warm up game */
+  #warmupSlide{padding-top:44px;padding-bottom:140px;justify-content:flex-start}
+  #warmupSlide .wrap{margin-top:auto;margin-bottom:auto}
+  #warmupSlide .slide-intro{margin-bottom:14px}
+  #warmupSlide .slide-intro p{font-size:19px;margin:.3em 0}
+  .wg-card{background:linear-gradient(180deg,#fff,var(--teal-tint));border:1px solid var(--line);border-radius:20px;padding:20px 22px;box-shadow:var(--shadow);text-align:center}
+  .wg-top{display:flex;gap:12px;justify-content:center;margin-bottom:6px}
+  .wg-pill{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 18px;font-family:"Nunito";font-weight:800}
+  .wg-pill.streak{color:var(--coral-deep)}
+  .wg-status{color:var(--ink-soft);font-weight:800;font-size:.85rem;margin:2px 0 8px}
+  .wg-stage{font-family:"Fraunces",serif;font-weight:900;font-size:2.5rem;color:var(--teal-deep);margin:4px 0 16px;min-height:1.3em}
+  .wg-stage .qmark{color:var(--ink-soft)}
+  .wg-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .wg-btn{width:90px;height:76px;font-family:"Fraunces",serif;font-size:1.4rem;font-weight:900;border:2px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;transition:.15s;color:var(--ink)}
+  .wg-btn:hover:not(:disabled){border-color:var(--teal)}
+  .wg-btn.pick{border-color:var(--teal)}
+  .wg-btn.ok{border-color:var(--green);background:var(--green-tint);color:var(--green)}
+  .wg-btn.no{border-color:var(--red);background:var(--red-tint);color:var(--red)}
+  .wg-btn:disabled{cursor:default}
+  .wg-feedback{font-family:"Nunito";font-weight:800;font-size:.92rem;min-height:1.3em;margin:10px 0 2px}
+  .wg-feedback.ok{color:var(--green)}
+  .wg-feedback.no{color:var(--red)}
+  .wg-action{margin-top:12px}
+  @media(max-width:600px){
+    .wg-btn{width:74px;height:68px;font-size:1.2rem}
+    .wg-stage{font-size:1.9rem}
+  }
+
   @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 
   /* ---------- slide deck layout ---------- */
@@ -245,7 +273,7 @@
     <div class="slide-intro">
       <span class="eyebrow">The big idea</span>
       <h2>Compare from the biggest place first</h2>
-      <p>Line the numbers up by place value and start at the largest place, on the left. Work right until you find a place where the digits are different. That place decides it.</p>
+      <p>Line the numbers up by place value and start on the left. Work right until the digits are different.</p>
     </div>
 
     <div class="tool" style="margin-top:18px">
@@ -267,6 +295,33 @@
       <div class="align" id="align"></div>
       <div class="verdict" id="verdict"></div>
       <div class="whymsg" id="whymsg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WARM UP GAME -->
+<section class="slide" id="warmupSlide">
+  <div class="wrap">
+    <div class="slide-intro">
+      <span class="eyebrow">Warm up &middot; Compare challenge</span>
+      <h2>Ten quick rounds. Keep your streak alive.</h2>
+      <p>Pick the symbol that makes each statement true. <br>Fast feedback, running streak, one point each.</p>
+    </div>
+
+    <div class="wg-card">
+      <div class="wg-top">
+        <span class="wg-pill" id="wgScore">Score 0</span>
+        <span class="wg-pill streak" id="wgStreak">Streak 0</span>
+      </div>
+      <p class="wg-status" id="wgStatus">Press start</p>
+      <div class="wg-stage" id="wgStage">Ready?</div>
+      <div class="wg-btns">
+        <button class="wg-btn" id="wgLt" data-sym="<" type="button">&lt;</button>
+        <button class="wg-btn" id="wgEq" data-sym="=" type="button">=</button>
+        <button class="wg-btn" id="wgGt" data-sym=">" type="button">&gt;</button>
+      </div>
+      <p class="wg-feedback" id="wgFeedback"></p>
+      <button class="btn primary wg-action" id="wgAction" type="button">Start challenge</button>
     </div>
   </div>
 </section>
@@ -632,6 +687,96 @@ document.querySelectorAll("#tabs .tab").forEach(tab=>{
     const l=document.createElementNS("http://www.w3.org/2000/svg","line");
     l.setAttribute("x1",x); l.setAttribute("x2",x); l.setAttribute("y1",70); l.setAttribute("y2",86); g.appendChild(l);
   }
+})();
+
+/* ---------------- warm up game ---------------- */
+(function(){
+  const WARMUP = [
+    ["6.3","6.49"],
+    ["3.54","3.55"],
+    ["16.88","16.08"],
+    ["0.7","0.65"],
+    ["8.5","8.62"],
+    ["4.3","4.30"],
+    ["7.03","7.3"],
+    ["12.9","12.92"],
+    ["1.255","1.256"],
+    ["22.605","22.65"]
+  ];
+  const stageEl=document.getElementById('wgStage');
+  const statusEl=document.getElementById('wgStatus');
+  const scoreEl=document.getElementById('wgScore');
+  const streakEl=document.getElementById('wgStreak');
+  const feedbackEl=document.getElementById('wgFeedback');
+  const actionBtn=document.getElementById('wgAction');
+  if(!stageEl) return;
+  const btns=[document.getElementById('wgLt'),document.getElementById('wgEq'),document.getElementById('wgGt')];
+
+  let order=[], qi=0, score=0, streak=0, active=false, answered=false, timer=null;
+
+  function shuffledOrder(){
+    const idx=WARMUP.map((_,i)=>i);
+    for(let i=idx.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [idx[i],idx[j]]=[idx[j],idx[i]]; }
+    return idx;
+  }
+  function updateChips(){ scoreEl.textContent='Score '+score; streakEl.textContent='Streak '+streak; }
+  function resetBtns(){ btns.forEach(b=>{ b.className='wg-btn'; b.disabled=!active; }); }
+
+  function renderIdle(){
+    active=false; answered=false; clearTimeout(timer);
+    statusEl.textContent='Press start';
+    stageEl.textContent='Ready?';
+    feedbackEl.textContent=''; feedbackEl.className='wg-feedback';
+    resetBtns();
+    actionBtn.textContent='Start challenge';
+  }
+  function renderQuestion(){
+    answered=false; clearTimeout(timer);
+    const pair=WARMUP[order[qi]];
+    statusEl.textContent='Question '+(qi+1)+' of '+WARMUP.length;
+    stageEl.innerHTML=pair[0]+' <span class="qmark">?</span> '+pair[1];
+    feedbackEl.textContent=''; feedbackEl.className='wg-feedback';
+    resetBtns();
+    actionBtn.textContent='Restart';
+  }
+  function renderFinished(){
+    active=false; answered=false; clearTimeout(timer);
+    statusEl.textContent='All done';
+    stageEl.textContent=score+' / '+WARMUP.length;
+    feedbackEl.textContent = score===WARMUP.length ? 'Perfect round!' : 'Nice work — play again to beat it.';
+    feedbackEl.className='wg-feedback ok';
+    resetBtns();
+    actionBtn.textContent='Restart';
+  }
+  function start(){
+    order=shuffledOrder(); qi=0; score=0; streak=0; active=true;
+    updateChips(); renderQuestion();
+  }
+  function answer(sym){
+    if(!active || answered) return;
+    answered=true;
+    const pair=WARMUP[order[qi]];
+    const correct=symOf(pair[0],pair[1]);
+    const ok = sym===correct;
+    btns.forEach(b=>{
+      b.disabled=true;
+      if(b.dataset.sym===correct) b.classList.add('ok');
+      else if(b.dataset.sym===sym) b.classList.add('no');
+    });
+    if(ok){ score++; streak++; feedbackEl.textContent='Correct!'; feedbackEl.className='wg-feedback ok'; }
+    else {
+      streak=0;
+      const words = correct==='<' ? 'less than' : (correct==='>' ? 'greater than' : 'equal to');
+      feedbackEl.textContent='Not quite. It is '+words+'.'; feedbackEl.className='wg-feedback no';
+    }
+    updateChips();
+    timer=setTimeout(()=>{ qi++; if(qi>=WARMUP.length) renderFinished(); else renderQuestion(); }, 1100);
+  }
+
+  btns.forEach(b=>b.addEventListener('click',()=>answer(b.dataset.sym)));
+  actionBtn.addEventListener('click', start);
+  updateChips();
+  renderIdle();
 })();
 
 /* ---------------- slide deck navigation ---------------- */
